@@ -1,6 +1,8 @@
 # Trajectory Toolkit: OpenClaw Trajectory Capture Tool
 
-[中文](README.md) | [English](README.en.md)
+<p align="center">
+  <a href="./README.md">[中文]</a> | <strong>[English]</strong>
+</p>
 
 ## 1. Introduction
 

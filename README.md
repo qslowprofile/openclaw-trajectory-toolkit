@@ -1,6 +1,8 @@
 # Trajectory Toolkit ：OpenClaw 轨迹获取工具
 
-[中文](README.md) | [English](README.en.md)
+<p align="center">
+  <strong>[中文]</strong> | <a href="./README.en.md">[English]</a>
+</p>
 
 ## 一、简介
 **OpenClaw Trajectory Toolkit** 是一个把 OpenClaw 这类AI Agent 运行过程转化为标准化、可评测的结构化证据的工具。
