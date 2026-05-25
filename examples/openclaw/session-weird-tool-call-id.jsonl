@@ -1,0 +1,4 @@
+{"type":"session","timestamp":"2026-05-14T01:00:00.000Z","sessionId":"sess_weird_id"}
+{"type":"message","timestamp":"2026-05-14T01:00:01.000Z","message":{"id":"msg_user","role":"user","content":[{"type":"text","text":"Check weather"}]}}
+{"type":"message","timestamp":"2026-05-14T01:00:02.000Z","message":{"id":"msg_assistant_tool","role":"assistant","model":"proxy","content":[{"type":"tool_use","id":"toolu|weather:bad/id","name":"search","input":{"query":"weather"}}]}}
+{"type":"message","timestamp":"2026-05-14T01:00:03.000Z","message":{"id":"msg_tool_result","role":"tool","content":[{"type":"tool_result","tool_use_id":"toolu|weather:bad/id","content":{"ok":true}}]}}

@@ -1,0 +1,8 @@
+{"hookType":"run.started","runId":"diagnostic-example","sessionId":"session-diagnostic","input":"diagnostic-only run","eventAt":1778250080000}
+{"hookType":"model.call.started","runId":"diagnostic-example","sessionId":"session-diagnostic","model":"proxy","eventAt":1778250080010}
+{"hookType":"context.assembled","runId":"diagnostic-example","sessionId":"session-diagnostic","tokenCount":321,"messageCount":4,"eventAt":1778250080020}
+{"hookType":"tool.execution.started","runId":"diagnostic-example","sessionId":"session-diagnostic","name":"exec","toolCallId":"tool|exec:1","input":{"command":"pwd"},"eventAt":1778250080030}
+{"hookType":"tool.execution.completed","runId":"diagnostic-example","sessionId":"session-diagnostic","name":"exec","toolCallId":"tool|exec:1","output":{"stdout":"/tmp"},"durationMs":8,"eventAt":1778250080040}
+{"type":"session.stalled","runId":"diagnostic-example","sessionId":"session-diagnostic","reason":"no_progress","ts":1778250080050}
+{"hookType":"model.call.completed","runId":"diagnostic-example","sessionId":"session-diagnostic","model":"proxy","usage":{"input":11,"output":7},"eventAt":1778250080060}
+{"hookType":"run.completed","runId":"diagnostic-example","sessionId":"session-diagnostic","success":true,"eventAt":1778250080070}

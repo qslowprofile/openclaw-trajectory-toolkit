@@ -1,0 +1,10 @@
+node_modules/
+.openclaw/
+coverage/
+*.log
+.DS_Store
+.env
+.env.*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

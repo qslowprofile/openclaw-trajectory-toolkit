@@ -1,0 +1,235 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OpenClawTrajectory",
+  "type": "object",
+  "required": ["schema_version", "id", "trace_id", "run_id", "root_step", "agent_steps"],
+  "properties": {
+    "schema_version": { "const": "openclaw.trajectory/v1" },
+    "id": { "type": "string", "minLength": 1 },
+    "trace_id": { "type": "string", "minLength": 16 },
+    "run_id": { "type": "string", "minLength": 1 },
+    "root_step": { "$ref": "#/definitions/rootStep" },
+    "agent_steps": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/agentStep" }
+    },
+    "meta_steps": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/atomicStep" }
+    },
+    "diagnostic_steps": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/atomicStep" }
+    },
+    "links": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/trajectoryLink" }
+    },
+    "session_tree": {
+      "type": "object",
+      "properties": {
+        "root_session_id": { "type": ["string", "null"] },
+        "children": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["session_id", "parent_step_id"],
+            "properties": {
+              "session_id": { "type": "string", "minLength": 1 },
+              "agent_id": { "type": ["string", "null"] },
+              "parent_step_id": { "type": "string", "minLength": 1 }
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "definitions": {
+    "trajectoryLink": {
+      "type": "object",
+      "required": ["type", "from_step_id", "metadata"],
+      "properties": {
+        "type": { "enum": ["waits_for", "polls", "depends_on", "delegates_to", "returns_to"] },
+        "from_step_id": { "type": "string", "minLength": 1 },
+        "to_step_id": { "type": ["string", "null"] },
+        "to_session_id": { "type": ["string", "null"] },
+        "metadata": { "type": "object", "additionalProperties": true }
+      },
+      "additionalProperties": false
+    },
+    "basicInfo": {
+      "type": "object",
+      "required": ["started_at", "duration_ms", "status"],
+      "properties": {
+        "started_at": { "type": "string" },
+        "duration_ms": { "type": "number", "minimum": 0 },
+        "status": { "enum": ["ok", "error", "cancelled", "timeout", "running"] },
+        "error": {
+          "type": ["object", "null"],
+          "properties": {
+            "code": { "type": ["string", "number"] },
+            "message": { "type": "string" }
+          },
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    },
+    "metricsInfo": {
+      "type": "object",
+      "properties": {
+        "llm_duration_ms": { "type": "number", "minimum": 0 },
+        "tool_duration_ms": { "type": "number", "minimum": 0 },
+        "skill_duration_ms": { "type": "number", "minimum": 0 },
+        "shell_duration_ms": { "type": "number", "minimum": 0 },
+        "file_duration_ms": { "type": "number", "minimum": 0 },
+        "mcp_duration_ms": { "type": "number", "minimum": 0 },
+        "state_duration_ms": { "type": "number", "minimum": 0 },
+        "other_duration_ms": { "type": "number", "minimum": 0 },
+        "instant_step_count": { "type": "number", "minimum": 0 },
+        "tool_errors": { "type": "object", "additionalProperties": { "type": "array", "items": { "type": "string" } } },
+        "tool_error_rate": { "type": "number", "minimum": 0 },
+        "model_errors": { "type": "object", "additionalProperties": { "type": "array", "items": { "type": "string" } } },
+        "model_error_rate": { "type": "number", "minimum": 0 },
+        "tool_step_proportion": { "type": "number", "minimum": 0 },
+        "input_tokens": { "type": "number", "minimum": 0 },
+        "output_tokens": { "type": "number", "minimum": 0 },
+        "total_cost_usd": { "type": "number", "minimum": 0 },
+        "meta_trace": {
+          "type": "object",
+          "properties": {
+            "count": { "type": "number", "minimum": 0 },
+            "duration_ms": { "type": "number", "minimum": 0 },
+            "error_count": { "type": "number", "minimum": 0 },
+            "input_tokens": { "type": "number", "minimum": 0 },
+            "output_tokens": { "type": "number", "minimum": 0 },
+            "cost_usd": { "type": "number", "minimum": 0 }
+          },
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    },
+    "rootStep": {
+      "type": "object",
+      "required": ["id", "name", "input", "output", "basic_info", "metrics_info", "metadata"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "input": {},
+        "output": {},
+        "basic_info": { "$ref": "#/definitions/basicInfo" },
+        "metrics_info": { "$ref": "#/definitions/metricsInfo" },
+        "metadata": { "type": "object", "additionalProperties": true }
+      },
+      "additionalProperties": true
+    },
+    "agentStep": {
+      "type": "object",
+      "required": ["id", "parent_id", "name", "input", "output", "basic_info", "metrics_info", "metadata", "steps"],
+      "properties": {
+        "id": { "type": "string" },
+        "parent_id": { "type": ["string", "null"] },
+        "name": { "type": "string" },
+        "input": {},
+        "output": {},
+        "basic_info": { "$ref": "#/definitions/basicInfo" },
+        "metrics_info": { "$ref": "#/definitions/metricsInfo" },
+        "metadata": {
+          "type": "object",
+          "properties": {
+            "source": {
+              "type": "object",
+              "required": ["type", "schema_version"],
+              "properties": {
+                "type": { "type": "string" },
+                "schema_version": { "type": "string" }
+              },
+              "additionalProperties": true
+            }
+          },
+          "additionalProperties": true
+        },
+        "steps": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/atomicStep" }
+        }
+      },
+      "additionalProperties": true
+    },
+    "atomicStep": {
+      "type": "object",
+      "required": ["id", "parent_id", "type", "name", "input", "output", "basic_info", "metadata"],
+      "properties": {
+        "id": { "type": "string" },
+        "parent_id": { "type": ["string", "null"] },
+        "type": { "enum": ["agent", "model", "skill", "tool", "mcp", "file", "shell", "state", "graph", "artifact", "eval"] },
+        "name": { "type": "string" },
+        "input": {},
+        "output": {},
+        "basic_info": { "$ref": "#/definitions/basicInfo" },
+        "metadata": {
+          "type": "object",
+          "properties": {
+            "artifact_inline": {
+              "type": "object",
+              "properties": {
+                "input_ref": { "type": ["string", "null"] },
+                "output_ref": { "type": ["string", "null"] },
+                "input_summary": { "type": ["string", "null"] },
+                "output_summary": { "type": ["string", "null"] },
+                "input_redacted": { "type": "boolean" },
+                "output_redacted": { "type": "boolean" },
+                "input_redacted_keys": { "type": "array", "items": { "type": "string", "pattern": "^/" } },
+                "output_redacted_keys": { "type": "array", "items": { "type": "string", "pattern": "^/" } }
+              },
+              "additionalProperties": true
+            },
+            "state.operation": { "type": "string" },
+            "state.scope": { "type": "string" },
+            "state.key": { "type": "string" },
+            "mcp.method.name": { "type": "string" },
+            "mcp.session.id": { "type": "string" },
+            "mcp.server": { "type": "string" }
+          },
+          "additionalProperties": true
+        },
+        "model_info": { "type": "object", "additionalProperties": true }
+      },
+      "additionalProperties": true,
+      "allOf": [
+        {
+          "if": { "properties": { "type": { "const": "state" } } },
+          "then": {
+            "properties": {
+              "metadata": {
+                "required": ["state.operation"],
+                "properties": {
+                  "state.operation": {
+                    "enum": ["read", "write", "snapshot", "delete", "update", "list", "keys", "scan", "touch", "expire", "clear", "get", "set", "unknown"]
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "type": { "const": "mcp" } } },
+          "then": {
+            "properties": {
+              "metadata": {
+                "required": ["mcp.method.name"],
+                "properties": {
+                  "mcp.method.name": { "type": "string", "minLength": 1 }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "additionalProperties": false
+}

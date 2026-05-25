@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OpenClawTrajectoryMerge",
+  "type": "object",
+  "required": ["schema_version", "generated_at", "mode", "run_count", "runs"],
+  "properties": {
+    "schema_version": { "const": "openclaw.trajectory-merge/v1" },
+    "generated_at": { "type": "string" },
+    "mode": { "enum": ["summary", "full"] },
+    "run_count": { "type": "integer", "minimum": 0 },
+    "warnings": {
+      "type": "array",
+      "items": { "type": "object", "additionalProperties": true }
+    },
+    "runs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["run_id", "trace_id", "status", "started_at", "duration_ms", "metrics_info"],
+        "properties": {
+          "run_id": { "type": "string", "minLength": 1 },
+          "trace_id": { "type": "string", "minLength": 1 },
+          "status": { "enum": ["ok", "error", "cancelled", "timeout", "running"] },
+          "started_at": { "type": "string" },
+          "duration_ms": { "type": "number", "minimum": 0 },
+          "metrics_info": { "type": "object" },
+          "trajectory": { "type": "object" }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

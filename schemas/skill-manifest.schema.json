@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OpenClawSkillManifest",
+  "type": "object",
+  "required": ["schema_version", "name", "version", "input_schema", "output_schema", "permissions"],
+  "properties": {
+    "schema_version": { "const": "openclaw.skill/v1" },
+    "name": { "type": "string", "minLength": 1 },
+    "version": { "type": "string", "minLength": 1 },
+    "source": { "type": "string" },
+    "input_schema": { "type": "object", "additionalProperties": true },
+    "output_schema": { "type": "object", "additionalProperties": true },
+    "permissions": { "type": "array", "items": { "type": "string" } },
+    "tool_dependencies": { "type": "array", "items": { "type": "string" } },
+    "model_policy": { "type": "object", "additionalProperties": true },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "additionalProperties": false
+}

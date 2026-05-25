@@ -1,0 +1,1 @@
+{"kind":"agent.subagent","actor":"agent","phase":"end","status":"ok","step_id":"step_spawn_child","attrs":{"agent.name":"main","openclaw.session_id":"sess_root","openclaw.child_session_id":"sess_child","openclaw.child_agent_id":"agent_child","openclaw.requester_session_id":"sess_root","openclaw.delivery_origin":"native_hook"},"output":{"session_id":"sess_child"}}

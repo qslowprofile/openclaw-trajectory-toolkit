@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OpenClawTrajectoryEvent",
+  "type": "object",
+  "required": ["schema_version", "event_id", "timestamp", "phase", "kind", "actor", "status", "ids", "attrs"],
+  "properties": {
+    "schema_version": { "const": "openclaw.event/v1" },
+    "event_id": { "type": "string", "pattern": "^evt_[A-Za-z0-9_-]+$" },
+    "timestamp": { "type": "string", "minLength": 1 },
+    "phase": { "enum": ["start", "end", "event"] },
+    "kind": { "type": "string", "minLength": 1 },
+    "actor": { "enum": ["runtime", "agent", "model", "skill", "tool", "mcp", "file", "shell", "state", "artifact", "evaluator"] },
+    "status": { "enum": ["ok", "error", "cancelled", "timeout", "running"] },
+    "ids": {
+      "type": "object",
+      "required": ["trace_id", "span_id", "run_id"],
+      "properties": {
+        "trace_id": { "type": "string", "minLength": 16 },
+        "span_id": { "type": "string", "minLength": 8 },
+        "parent_span_id": { "type": ["string", "null"] },
+        "run_id": { "type": "string", "pattern": "^run_[A-Za-z0-9_-]+$" },
+        "session_id": { "type": ["string", "null"] },
+        "turn_id": { "type": ["string", "null"], "pattern": "^[A-Za-z0-9._-]+$" },
+        "step_id": { "type": ["string", "null"], "pattern": "^step_[A-Za-z0-9._-]+$" },
+        "tool_call_id": { "type": ["string", "null"], "pattern": "^[A-Za-z0-9._-]+$" },
+        "skill_invocation_id": { "type": ["string", "null"], "pattern": "^[A-Za-z0-9._-]+$" },
+        "artifact_id": { "type": ["string", "null"], "pattern": "^art_[A-Za-z0-9_-]+$" }
+      },
+      "additionalProperties": { "type": ["string", "null"] }
+    },
+    "attrs": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "input_ref": { "type": ["string", "null"] },
+    "output_ref": { "type": ["string", "null"] },
+    "error": {
+      "type": ["object", "null"],
+      "properties": {
+        "code": { "type": ["string", "number"] },
+        "message": { "type": "string" },
+        "stack": { "type": "string" },
+        "retryable": { "type": "boolean" },
+        "attempt_no": { "type": "integer" }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

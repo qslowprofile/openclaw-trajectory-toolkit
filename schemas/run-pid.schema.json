@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OpenClawRunPid",
+  "type": "object",
+  "required": ["schema_version", "pid", "hostname", "started_at", "run_id"],
+  "properties": {
+    "schema_version": { "const": "openclaw.run-pid/v1" },
+    "pid": { "type": "integer", "minimum": 1 },
+    "hostname": { "type": "string", "minLength": 1 },
+    "started_at": { "type": "string" },
+    "run_id": { "type": "string", "minLength": 1 }
+  },
+  "additionalProperties": true
+}

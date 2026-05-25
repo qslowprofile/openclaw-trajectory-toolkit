@@ -1,0 +1,115 @@
+import { type StartRunOptions } from "./recorder.js";
+export interface OpenClawPluginApiLike {
+    id?: string;
+    name?: string;
+    version?: string;
+    config?: unknown;
+    pluginConfig?: Record<string, unknown>;
+    runtime?: unknown;
+    logger?: {
+        debug?: (message: string) => void;
+        info?: (message: string) => void;
+        warn?: (message: string) => void;
+        error?: (message: string) => void;
+    };
+    diagnostics?: DiagnosticSubscription;
+    resolvePath?: (input: string) => string;
+    on: (hookName: string, handler: (event: unknown, ctx: unknown) => void | Promise<void>, opts?: {
+        priority?: number;
+    }) => void;
+}
+export interface DiagnosticSubscription {
+    onDiagnosticEvent?: (listener: (event: unknown) => void) => (() => void) | void;
+    onExternalRequestDiagnosticEvent?: (listener: (event: unknown) => void) => (() => void) | void;
+}
+export interface OpenClawNativeCollectorOptions {
+    baseDir?: string;
+    finalizeDelayMs?: number;
+    normalizeOnFinalize?: boolean;
+    captureMessageEvents?: boolean;
+    captureDiagnostics?: boolean;
+    artifactStore?: StartRunOptions["artifactStore"];
+    diagnostics?: DiagnosticSubscription;
+    startupScavenge?: boolean;
+    startupScavengeStaleAfterMs?: number;
+    externalDiagnosticBufferTtlMs?: number;
+    now?: () => number;
+}
+export declare function registerOpenClawNativeTrajectory(api: OpenClawPluginApiLike, options?: OpenClawNativeCollectorOptions): OpenClawNativeTrajectoryCollector;
+export declare class OpenClawNativeTrajectoryCollector {
+    private readonly api;
+    private readonly options;
+    readonly baseDir: string;
+    private readonly finalizeDelayMs;
+    private readonly normalizeOnFinalize;
+    private readonly captureMessageEvents;
+    private readonly captureDiagnostics;
+    private readonly now;
+    private readonly startupScavenge;
+    private readonly startupScavengeStaleAfterMs;
+    private readonly externalDiagnosticBufferTtlMs;
+    private readonly runs;
+    private readonly latestRunBySession;
+    private readonly pendingModelResolveBySession;
+    private readonly pendingMessageTools;
+    private readonly traceRegistry;
+    private readonly systemPromptHashes;
+    private readonly historySnapshotHashesByRun;
+    private readonly pendingDiagnostics;
+    private readonly pendingExternalDiagnostics;
+    private readonly activeExternalRequests;
+    private externalDiagnosticsDropped;
+    private diagnosticsUnsubscribe;
+    private externalDiagnosticsUnsubscribe;
+    private startupScavengePromise;
+    constructor(api: OpenClawPluginApiLike, options?: OpenClawNativeCollectorOptions);
+    register(): void;
+    attachDiagnostics(diagnostics: DiagnosticSubscription | undefined): void;
+    handleDiagnosticEvent(event: Record<string, unknown>): Promise<void>;
+    private enqueueDiagnostic;
+    private enqueueExternalRequestDiagnostic;
+    flush(): Promise<void>;
+    handleHook(hookName: string, event: Record<string, unknown>, ctx: Record<string, unknown>): Promise<void>;
+    private handleMessageReceived;
+    private rememberSessionContext;
+    private handleBeforeModelResolve;
+    private handlePromptBuild;
+    private handleLlmInput;
+    private handleLlmOutput;
+    private handleBeforeToolCall;
+    private handleAfterToolCall;
+    private handleMessageLifecycle;
+    private handleAgentEnd;
+    private handleSessionEnd;
+    private handleCompaction;
+    private handleRunLifecycle;
+    private handleModelCallStarted;
+    private handleModelCallEnded;
+    private handleToolExecution;
+    private handleContextAssembled;
+    private handleSubagent;
+    private handleTranscriptHook;
+    private handleDiagnostic;
+    private recordDiagnostic;
+    private handleExternalRequestDiagnostic;
+    private findRunForExternalDiagnostic;
+    private bufferExternalDiagnostic;
+    private drainExternalDiagnostics;
+    private externalDiagnosticRunKey;
+    private externalDiagnosticKeysForRun;
+    private recordExternalRequestDiagnostic;
+    private ensureRun;
+    private indexRun;
+    private latestForSession;
+    private runForTelemetry;
+    private modelSpan;
+    private toolSpan;
+    private contextSnapshotForLlmInput;
+    private recordInstant;
+    private correlateMessage;
+    private cleanupMessageTools;
+    private scheduleFinalize;
+    private finalizeRun;
+    private scavengeStartupRuns;
+    private log;
+}

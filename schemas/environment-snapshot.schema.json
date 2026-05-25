@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OpenClawEnvironmentSnapshot",
+  "type": "object",
+  "required": ["schema_version", "captured_at", "toolkit", "node", "process", "openclaw"],
+  "properties": {
+    "schema_version": { "const": "openclaw.environment-snapshot/v1" },
+    "captured_at": { "type": "string" },
+    "toolkit": {
+      "type": "object",
+      "required": ["name", "version"],
+      "properties": {
+        "name": { "type": "string" },
+        "version": { "type": ["string", "null"] }
+      },
+      "additionalProperties": true
+    },
+    "node": {
+      "type": "object",
+      "required": ["version", "platform", "arch"],
+      "properties": {
+        "version": { "type": "string" },
+        "platform": { "type": "string" },
+        "arch": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "process": {
+      "type": "object",
+      "required": ["pid", "cwd", "hostname"],
+      "properties": {
+        "pid": { "type": "number", "minimum": 0 },
+        "cwd": { "type": "string" },
+        "hostname": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "openclaw": { "type": "object", "additionalProperties": true }
+  },
+  "additionalProperties": true
+}

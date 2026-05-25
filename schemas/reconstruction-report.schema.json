@@ -1,0 +1,84 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OpenClaw Reconstruction Report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "generated_at",
+    "source_event_count",
+    "included_event_count",
+    "out_of_window_filtered_count",
+    "self_step_filtered_count",
+    "control_message_filtered_count",
+    "step_count",
+    "model_step_count",
+    "tool_step_count",
+    "tool_input_missing_count",
+    "summary_only_tool_output_count",
+    "zero_duration_step_count",
+    "model_text_empty_count",
+    "evaluation_readiness",
+    "readiness_reasons",
+    "time_window",
+    "exclude_self",
+    "quality",
+    "warnings"
+  ],
+  "properties": {
+    "schema_version": { "const": "openclaw.reconstruction-report/v1" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "source_event_count": { "type": "integer", "minimum": 0 },
+    "included_event_count": { "type": "integer", "minimum": 0 },
+    "out_of_window_filtered_count": { "type": "integer", "minimum": 0 },
+    "self_step_filtered_count": { "type": "integer", "minimum": 0 },
+    "control_message_filtered_count": { "type": "integer", "minimum": 0 },
+    "step_count": { "type": "integer", "minimum": 0 },
+    "model_step_count": { "type": "integer", "minimum": 0 },
+    "tool_step_count": { "type": "integer", "minimum": 0 },
+    "tool_input_missing_count": { "type": "integer", "minimum": 0 },
+    "summary_only_tool_output_count": { "type": "integer", "minimum": 0 },
+    "zero_duration_step_count": { "type": "integer", "minimum": 0 },
+    "model_text_empty_count": { "type": "integer", "minimum": 0 },
+    "evaluation_readiness": { "enum": ["ready", "limited", "not_ready"] },
+    "readiness_reasons": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "empty_trajectory",
+          "missing_model_steps",
+          "missing_tool_steps",
+          "tool_input_missing",
+          "summary_only_tool_output",
+          "zero_duration_steps"
+        ]
+      }
+    },
+    "time_window": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["start_time", "end_time", "source"],
+      "properties": {
+        "start_time": { "type": ["string", "null"], "format": "date-time" },
+        "end_time": { "type": ["string", "null"], "format": "date-time" },
+        "source": { "enum": ["explicit", "recording_markers", "none"] }
+      }
+    },
+    "exclude_self": { "type": "boolean" },
+    "quality": { "enum": ["low", "medium", "high"] },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code", "message"],
+        "properties": {
+          "code": {
+            "enum": ["tool_input_missing", "summary_only_tool_output", "zero_duration_steps", "model_output_empty"]
+          },
+          "message": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}

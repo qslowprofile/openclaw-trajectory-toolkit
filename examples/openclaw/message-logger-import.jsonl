@@ -1,0 +1,4 @@
+{"hookType":"llm_input","runId":"message-log-example","sessionId":"session-message-log","model":"proxy","eventAt":1778250070000}
+{"hookType":"before_tool_call","runId":"message-log-example","sessionId":"session-message-log","name":"read","tool_call_id":"read|1","params":{"path":"package.json"},"eventAt":1778250070010}
+{"hookType":"after_tool_call","runId":"message-log-example","sessionId":"session-message-log","function":{"name":"read"},"tool_call_id":"read|1","result":{"content":"{}"},"eventAt":1778250070020}
+{"hookType":"llm_output","runId":"message-log-example","sessionId":"session-message-log","model":"proxy","usage":{"input":5,"output":3},"assistantTexts":["done"],"eventAt":1778250070030}

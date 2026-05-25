@@ -1,0 +1,70 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OpenClawTrajectoryOpenClawInstallReport",
+  "type": "object",
+  "required": ["schema_version", "status", "started_at", "updated_at", "home", "base_dir", "command", "openclaw_extension_dir", "plugin_registered", "plugin_enabled", "restarted", "detached_verify", "state_path", "report_path", "log_path", "steps"],
+  "properties": {
+    "schema_version": { "const": "openclaw.trajectory-openclaw-install-report/v1" },
+    "status": { "enum": ["running", "ok", "warning", "error", "partial"] },
+    "message": { "type": ["string", "null"] },
+    "started_at": { "type": "string" },
+    "updated_at": { "type": "string" },
+    "completed_at": { "type": "string" },
+    "home": { "type": "string" },
+    "openclaw_home": { "type": "string" },
+    "openclaw_config_path": { "type": "string" },
+    "mode": { "enum": ["auto", "native", "cli-only"] },
+    "base_dir": { "type": "string" },
+    "command": { "type": "string" },
+    "install_dir": { "type": ["string", "null"] },
+    "openclaw_extension_dir": { "type": "string" },
+    "openclaw_plugin_manifest": { "type": ["string", "null"] },
+    "plugin_registered": { "type": "boolean" },
+    "plugin_enabled": { "type": "boolean" },
+    "openclaw_install_path": { "type": ["string", "null"] },
+    "restart_requested": { "type": "boolean" },
+    "restarted": { "type": "boolean" },
+    "restart_verified": { "type": "boolean" },
+    "restart_service_dir": { "type": ["string", "null"] },
+    "detached_verify": { "type": "boolean" },
+    "verifier_path": { "type": ["string", "null"] },
+    "state_path": { "type": "string" },
+    "report_path": { "type": "string" },
+    "log_path": { "type": "string" },
+    "native_hook_enabled": { "type": "boolean" },
+    "blocked_by": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["code"],
+        "properties": {
+          "code": { "type": "string" },
+          "path": { "type": "string" }
+        },
+        "additionalProperties": true
+      }
+    },
+    "root_completion_script": { "type": ["string", "null"] },
+    "root_completion_command": { "type": ["string", "null"] },
+    "doctor": { "type": "object" },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "status", "started_at"],
+        "properties": {
+          "name": { "type": "string" },
+          "status": { "enum": ["running", "ok", "warning", "error"] },
+          "command": { "type": "string" },
+          "started_at": { "type": "string" },
+          "ended_at": { "type": "string" },
+          "exit_code": { "type": "integer" },
+          "stdout_tail": { "type": "string" },
+          "stderr_tail": { "type": "string" }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

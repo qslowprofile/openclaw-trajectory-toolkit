@@ -1,0 +1,76 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OpenClaw Normalization Report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "run_id", "generated_at", "warnings", "summary"],
+  "properties": {
+    "schema_version": { "const": "openclaw.normalization-report/v1" },
+    "run_id": { "type": "string", "minLength": 1 },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code", "message", "metadata"],
+        "properties": {
+          "code": {
+            "enum": [
+              "missing_end_event",
+              "missing_start_event",
+              "duration_mismatch",
+              "root_window_extended",
+              "dangling_parent",
+              "unexpected_phase_mix",
+              "diagnostic_pair_mixed"
+            ]
+          },
+          "message": { "type": "string", "minLength": 1 },
+          "step_id": { "type": ["string", "null"] },
+          "span_id": { "type": ["string", "null"] },
+          "event_id": { "type": ["string", "null"] },
+          "metadata": { "type": "object" }
+        }
+      }
+    },
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "sources", "lossy", "invalid", "redacted"],
+      "properties": {
+        "schema_version": { "const": "openclaw.normalization-coverage/v1" },
+        "sources": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["captured", "missing", "inferred", "lossy", "invalid", "redacted"],
+            "properties": {
+              "captured": { "type": "integer", "minimum": 0 },
+              "missing": { "type": "integer", "minimum": 0 },
+              "inferred": { "type": "integer", "minimum": 0 },
+              "lossy": { "type": "integer", "minimum": 0 },
+              "invalid": { "type": "integer", "minimum": 0 },
+              "redacted": { "type": "integer", "minimum": 0 }
+            }
+          }
+        },
+        "lossy": { "type": "array", "items": { "type": "string" } },
+        "invalid": { "type": "array", "items": { "type": "string" } },
+        "redacted": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["event_count", "step_count", "diagnostic_step_count", "warning_count"],
+      "properties": {
+        "event_count": { "type": "integer", "minimum": 0 },
+        "step_count": { "type": "integer", "minimum": 0 },
+        "diagnostic_step_count": { "type": "integer", "minimum": 0 },
+        "warning_count": { "type": "integer", "minimum": 0 }
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OpenClawTrajectoryPluginManifest",
+  "type": "object",
+  "required": ["schema_version", "name", "version", "enabled", "auto_enable", "mode", "entry", "default_base_dir", "supported_hooks"],
+  "properties": {
+    "schema_version": { "const": "openclaw.trajectory-plugin/v1" },
+    "name": { "const": "openclaw-trajectory" },
+    "version": { "type": ["string", "null"] },
+    "installed_at": { "type": "string" },
+    "enabled": { "type": "boolean" },
+    "auto_enable": { "type": "boolean" },
+    "mode": { "enum": ["native", "register", "proxy", "manual"] },
+    "entry": { "type": "string", "minLength": 1 },
+    "register_entry": { "type": "string" },
+    "default_base_dir": { "type": "string", "minLength": 1 },
+    "supported_hooks": {
+      "type": "array",
+      "items": {
+        "enum": ["run", "session", "model", "tool", "message", "skill", "shell", "file", "mcp", "state", "subagent", "compaction", "diagnostic"]
+      }
+    }
+  },
+  "additionalProperties": true
+}

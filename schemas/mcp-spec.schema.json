@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OpenClawMcpSpec",
+  "type": "object",
+  "required": ["schema_version", "server", "method"],
+  "properties": {
+    "schema_version": { "const": "openclaw.mcp/v1" },
+    "server": { "type": "string", "minLength": 1 },
+    "method": { "type": "string", "minLength": 1 },
+    "tool": { "type": ["string", "null"] },
+    "resource": { "type": ["string", "null"] },
+    "request_schema": { "type": "object", "additionalProperties": true },
+    "response_schema": { "type": "object", "additionalProperties": true },
+    "attrs": { "type": "object", "additionalProperties": true }
+  },
+  "additionalProperties": false
+}

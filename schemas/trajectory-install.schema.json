@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OpenClawTrajectoryInstall",
+  "type": "object",
+  "required": ["schema_version", "installed_at", "install_dir", "bin_path", "default_base_dir"],
+  "properties": {
+    "schema_version": { "const": "openclaw.trajectory-install/v1" },
+    "installed_at": { "type": "string" },
+    "install_dir": { "type": "string" },
+    "bin_path": { "type": "string" },
+    "default_base_dir": { "type": "string" }
+  },
+  "additionalProperties": true
+}

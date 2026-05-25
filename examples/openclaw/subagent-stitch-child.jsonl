@@ -1,0 +1,1 @@
+{"kind":"model.call","actor":"model","phase":"end","status":"ok","step_id":"step_child_model","session_id":"sess_child","attrs":{"gen_ai.request.model":"proxy","openclaw.session_id":"sess_child"},"output":{"text":"child result"}}

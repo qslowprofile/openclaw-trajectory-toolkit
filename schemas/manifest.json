@@ -1,0 +1,23 @@
+{
+  "toolkit_version": "0.9.1",
+  "schemas": {
+    "artifact": ["openclaw.artifact/v1"],
+    "artifact_index": ["openclaw.artifact-index/v1"],
+    "config_snapshot": ["openclaw.config-snapshot/v1"],
+    "environment_snapshot": ["openclaw.environment-snapshot/v1"],
+    "event": ["openclaw.event/v1"],
+    "mcp": ["openclaw.mcp/v1"],
+    "normalization_report": ["openclaw.normalization-report/v1"],
+    "reconstruction_report": ["openclaw.reconstruction-report/v1"],
+    "run": ["openclaw.run/v1"],
+    "run_pid": ["openclaw.run-pid/v1"],
+    "skill_manifest": ["openclaw.skill/v1"],
+    "tool_spec": ["openclaw.tool/v1"],
+    "trajectory": ["openclaw.trajectory/v1"],
+    "trajectory_merge": ["openclaw.trajectory-merge/v1"],
+    "trajectory_plugin": ["openclaw.trajectory-plugin/v1"],
+    "trajectory_install": ["openclaw.trajectory-install/v1"],
+    "trajectory_openclaw_install_report": ["openclaw.trajectory-openclaw-install-report/v1"],
+    "trajectory_openclaw_install_state": ["openclaw.trajectory-openclaw-install-state/v1"]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OpenClawMcpStepMetadata",
+  "type": "object",
+  "required": ["mcp.method.name"],
+  "properties": {
+    "mcp.method.name": { "type": "string", "minLength": 1 },
+    "mcp.server": { "type": "string" },
+    "mcp.session.id": { "type": "string" },
+    "mcp.tool": { "type": "string" },
+    "mcp.resource": { "type": "string" }
+  },
+  "additionalProperties": true
+}

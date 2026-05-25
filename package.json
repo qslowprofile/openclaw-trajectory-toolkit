@@ -1,0 +1,46 @@
+{
+  "name": "openclaw-trajectory-toolkit",
+  "version": "0.9.1",
+  "description": "Local-first trajectory capture, normalization, evaluation, replay, and export toolkit for OpenClaw.",
+  "type": "module",
+  "bin": {
+    "openclaw-trajectory": "./dist/cli.js"
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./hooks": "./dist/hooks.js",
+    "./manual": "./dist/manual.js",
+    "./external-request-diagnostic": "./dist/external-request-diagnostic.js",
+    "./plugin": "./dist/plugin.js",
+    "./register": "./dist/register.js",
+    "./openclaw-plugin": "./dist/openclaw-plugin.js"
+  },
+  "scripts": {
+    "test": "node scripts/smoke-test.mjs",
+    "test:full": "tsx --test test/*.test.ts",
+    "typecheck": "tsc --noEmit",
+    "build": "tsc -p tsconfig.json",
+    "package:zip": "node scripts/package-zip.mjs"
+  },
+  "keywords": [
+    "openclaw",
+    "trajectory",
+    "opentelemetry",
+    "agent",
+    "evaluation",
+    "replay"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.12",
+    "tsx": "^4.19.4",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "ajv": "^8.20.0",
+    "safe-regex2": "^5.1.1"
+  }
+}

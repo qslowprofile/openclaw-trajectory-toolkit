@@ -1,0 +1,1 @@
+{"timestamp":"2026-05-03T00:00:01.000Z","kind":"state.snapshot","actor":"state","phase":"event","status":"ok","attrs":{"state.name":"before_tool"},"output":{"ready":true,"active_tool":"web_fetch"}}
